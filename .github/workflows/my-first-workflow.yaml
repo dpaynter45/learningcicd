@@ -22,6 +22,6 @@ jobs:
         run: hostname
       - name: Running multiple commands
         run: |
-          echo: "Hi from Dan Paynter"
-          echo: "Current time is `date`"
+          echo "Hi from Dan Paynter"
+          echo "Current time is `date`"
           sleep 20
