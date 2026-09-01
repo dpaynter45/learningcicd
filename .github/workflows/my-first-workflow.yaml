@@ -11,6 +11,8 @@ jobs:
         run: echo "Hi this is my first Github workflow"
       - name: Checking OS Release for Github Hosted Runner
         run: cat /etc/os-release
+      - name: Calling Sleep20
+        run: sleep 20
 
   job2:
     name: JOB2
