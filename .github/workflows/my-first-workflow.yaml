@@ -2,7 +2,7 @@ name: my-first-workflow
 # To get a trigger on every push in this repo
 on:
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: "26 * * * *"
 
 jobs:
   job1:
