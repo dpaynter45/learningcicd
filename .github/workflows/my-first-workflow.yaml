@@ -1,6 +1,8 @@
 name: my-first-workflow
 # To get a trigger on every push in this repo
-on: push
+on:
+  schedule:
+    - cron: "5 * * * *"
 
 jobs:
   job1:
@@ -24,21 +26,26 @@ jobs:
         run: |
           echo "Hi from Dan Paynter"
           echo "Current time is `date`"
-          sleep 20
+          sleep 25
 
   job3:
     name: JOB3
     needs: job1
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - name: Job for Single Dependency
         run: sleep 10
+      - name: Get Windows Software Version
+        shell: pwsh
+        run: get-computerinfo
 
   job4:
     name: JOB4
     needs: [job1, job2, job3]
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - name: Job for multiple dependencies
         run: sleep 10
+      - name: Software version
+        run: sw_vers
     
