@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  ci-pipline-job:
+  ci-pipeline-job:
     uses: dpaynter45/reusable-workflow/.github/workflows/ci-pipeline.yaml@main
     secrets: 
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
