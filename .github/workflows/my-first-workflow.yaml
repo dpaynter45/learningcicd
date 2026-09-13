@@ -1,53 +1,18 @@
-name: my-first-workflow
-# To get a trigger on every push in this repo
+name: CI Pipeline with Reusable Workflow
+# To get a trigger on every push in this repo in the main branch
 on:
   push:
     branches:
-      - dev
-      - 'feature-*'
       - main
-  pull_request: 
+  pull_request:
     branches:
       - main
-jobs:
-  job1:
-    name: JOB1
-    runs-on: ubuntu-latest
-    steps: 
-      - name: Step-1
-        run: |
-          pwd
-          ls -ltr
-          hostname
-      - name: Step-2 - Checkout
-        uses: actions/checkout@v7.0.1
-      - name: Step-3
-        run: |
-          echo `pwd` >> myartifact.txt
-          mkdir artifacts
-          echo `ls -ltr` >> artifacts/list.txt
-          echo `hostname` >> artifacts/hostname.txt
-      - name: Upload Single File
-        uses: actions/upload-artifact@v7
-        with:
-          name: single_file
-          path: ./myartifact.txt
 
-  job2:
-    name: JOB2
-    runs-on: ubuntu-latest
-    needs: job1
-    steps: 
-      - name: Checking current directory
-        run: |
-          pwd
-          ls -ltr
-      - name: Download single file artifact
-        uses: actions/download-artifact@v7
-        with:
-          name: single_file
-      - name: checking current directory post download
-        run: |
-          pwd
-          ls -ltr
-       
+jobs:
+  ci-pipline-job:
+    uses: dpaynter45/reusable-workflow/.githb/workflows/ci-pipeline.yaml@main
+    secrets: 
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+      
