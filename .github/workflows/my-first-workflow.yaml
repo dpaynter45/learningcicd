@@ -16,6 +16,9 @@ permissions:
 jobs:
   ci-pipeline-job:
     uses: dpaynter45/reusable-workflows/.github/workflows/ci-pipeline.yaml@main
+    with:
+      run_codeql: true
+      run_sonarqube: true
     secrets: 
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
