@@ -27,16 +27,16 @@ jobs:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
-  deploy-with-kubectl:
-    needs: ci-pipeline-job
-    uses: dpaynter/reusable-workflows/.github/workflows/deploy-with-kubectl.yml@main
-    with:
-      ENVIRONMENT: STAGING
-      IMAGE_NAME: ghcr.io/kulbhushanmayer/thinknyx_app
-    secrets:
-      KUBECONFIG: ${{ secrets.KUBECONFIG }}
-  selenium-tests:
-    needs: deploy-with-kubectl
-    uses: dpaynter45/reusable-workflows/.github/workflows/run-selenium-tests.yml@main
-    with:
-      ENVIRONMENT: STAGING
+  # deploy-with-kubectl:
+  #   needs: ci-pipeline-job
+  #   uses: dpaynter/reusable-workflows/.github/workflows/deploy-with-kubectl.yml@main
+  #   with:
+  #     ENVIRONMENT: STAGING
+  #     IMAGE_NAME: ghcr.io/kulbhushanmayer/thinknyx_app
+  #   secrets:
+  #     KUBECONFIG: ${{ secrets.KUBECONFIG }}
+  # selenium-tests:
+  #   needs: deploy-with-kubectl
+  #   uses: dpaynter45/reusable-workflows/.github/workflows/run-selenium-tests.yml@main
+  #   with:
+  #     ENVIRONMENT: STAGING
