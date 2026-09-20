@@ -17,7 +17,7 @@ env:
   OCI_REPOSITORY: ${{ github.repository_owner }}/helm-charts
 jobs:
   ci-pipeline-job:
-    uses: kulbhushanmayer/reusable-workflows/.github/workflows/ci-pipeline.yml@main
+    uses: dpaynter45/reusable-workflows/.github/workflows/ci-pipeline.yaml@main
     with:
       run_codeql: true
       run_sonarqube: false
@@ -29,7 +29,7 @@ jobs:
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
   deploy-with-kubectl:
     needs: ci-pipeline-job
-    uses: kulbhushanmayer/reusable-workflows/.github/workflows/deploy-with-kubectl.yml@main
+    uses: dpaynter/reusable-workflows/.github/workflows/deploy-with-kubectl.yml@main
     with:
       ENVIRONMENT: STAGING
       IMAGE_NAME: ghcr.io/kulbhushanmayer/thinknyx_app
@@ -37,6 +37,6 @@ jobs:
       KUBECONFIG: ${{ secrets.KUBECONFIG }}
   selenium-tests:
     needs: deploy-with-kubectl
-    uses: kulbhushanmayer/reusable-workflows/.github/workflows/run-selenium-tests.yml@main
+    uses: dpaynter45/reusable-workflows/.github/workflows/run-selenium-tests.yml@main
     with:
       ENVIRONMENT: STAGING
