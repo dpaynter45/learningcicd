@@ -1,25 +1,42 @@
 name: CI Pipeline with Reusable Workflow
-# To get a trigger on every push in this repo to the main branch 
+# To get a trigger on every push in this repo in the main branch
 on:
-  push:
-    branches:
-      - main
   pull_request:
     branches:
       - main
-permissions: 
+    paths-ignore:
+      - HELMCHART-VERSION
+permissions:
   actions: read
   security-events: write
   packages: write
-  contents: read
-  
+  contents: write
+
+env:
+  OCI_REGISTRY: ghcr.io
+  OCI_REPOSITORY: ${{ github.repository_owner }}/helm-charts
 jobs:
   ci-pipeline-job:
     uses: dpaynter45/reusable-workflows/.github/workflows/ci-pipeline.yaml@main
     with:
       run_codeql: true
-      run_sonarqube: true
-    secrets: 
+      run_sonarqube: false
+      run_build: true
+#      run_ghcr_publish: true
+    secrets:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+  # deploy-with-kubectl:
+  #   needs: ci-pipeline-job
+  #   uses: dpaynter/reusable-workflows/.github/workflows/deploy-with-kubectl.yml@main
+  #   with:
+  #     ENVIRONMENT: STAGING
+  #     IMAGE_NAME: ghcr.io/kulbhushanmayer/thinknyx_app
+  #   secrets:
+  #     KUBECONFIG: ${{ secrets.KUBECONFIG }}
+  # selenium-tests:
+  #   needs: deploy-with-kubectl
+  #   uses: dpaynter45/reusable-workflows/.github/workflows/run-selenium-tests.yml@main
+  #   with:
+  #     ENVIRONMENT: STAGING
