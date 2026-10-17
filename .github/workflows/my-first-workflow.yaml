@@ -17,7 +17,6 @@ jobs:
   ci-pipeline-job:
     uses: dpaynter45/reusable-workflows/.github/workflows/ci-pipeline.yaml@main
     with:
-      run_codeql: true
       run_sonarqube: true
       run_build: false
       run_ghcr_publish: true
